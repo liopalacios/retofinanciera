@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="container">
+        <app-datepicker-popup></app-datepicker-popup>
+        <table>                
+            <tr> 
+                <th scope="col">Cliente</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Total</th>
+                <th scope="col">Ver detalle</th>
+            </tr>
+            <tr *ngFor="let ven of ventas | paginate: {itemsPerPage: 5, currentPage: page}">
+                <td scope="row">{{ ven.idCliente.apellidos }}</td>
+                <td>{{ ven.idCliente.nombre }}</td>
+                <td>{{ ven.fecha }}</td>
+                <td>{{ ven.total }}</td>
+                <td (click)="openModal(ven)">
+                    <button mat-button data-bs-target="#staticBackdrop"                
+                    data-bs-toggle="modal" >Open dialog</button>     
+                </td>
+            </tr>
+        </table>
+    
+        <pagination-controls (pageChange)="page = $event"
+            previusLabel="Anterior"
+            nextLabel="Siguiente"
+        ></pagination-controls>
+        
+        <div class="modal fade" id="staticBackdrop">
+            <div class="modal-dialog modal-dialog-centered"  >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detalle de la venta</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                                           
+                        <table>                
+                            <tr> 
+                                <th scope="col">Producto</th>
+                                <th scope="col">Precio Unit.</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">SubTotal</th>
+                            </tr>
+                            <tr *ngFor="let vd of ventaDetalle | paginate: {itemsPerPage: 5, currentPage: page}">
+                                <td scope="row">{{ vd.idProducto.nombre }}</td>
+                                <td>{{ vd.precio }}</td>
+                                <td>{{ vd.cantidad }}</td>
+                                <td>{{ vd.subtotal }}</td>
+                                
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
